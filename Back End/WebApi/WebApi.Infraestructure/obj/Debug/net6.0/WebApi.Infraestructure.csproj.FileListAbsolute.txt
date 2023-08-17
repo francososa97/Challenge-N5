@@ -1,0 +1,14 @@
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\bin\Debug\net6.0\WebApi.Infraestructure.deps.json
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\bin\Debug\net6.0\WebApi.Infraestructure.dll
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\bin\Debug\net6.0\WebApi.Infraestructure.pdb
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.csproj.AssemblyReference.cache
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.AssemblyInfoInputs.cache
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.AssemblyInfo.cs
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.csproj.CoreCompileInputs.cache
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.dll
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\refint\WebApi.Infraestructure.dll
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.pdb
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\ref\WebApi.Infraestructure.dll
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\bin\Debug\net6.0\WebApi.Infraestructure.runtimeconfig.json
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi.Infraestructure\obj\Debug\net6.0\WebApi.Infraestructure.genruntimeconfig.cache
