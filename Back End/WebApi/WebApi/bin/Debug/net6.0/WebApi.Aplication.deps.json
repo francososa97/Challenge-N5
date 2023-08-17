@@ -11,7 +11,9 @@
           "Elsa.Persistence.EntityFramework.Core": "2.12.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
           "Swashbuckle.AspNetCore": "6.5.0",
-          "WebApi.Models": "1.0.0"
+          "WebApi.Models": "1.0.0",
+          "WebApi.Repository": "1.0.0",
+          "WebApi.Services": "1.0.0"
         },
         "runtime": {
           "WebApi.Aplication.dll": {}
@@ -1450,12 +1452,41 @@
           }
         }
       },
+      "WebApi.Infraestructure/1.0.0": {
+        "dependencies": {
+          "Elsa.Persistence.EntityFramework.Core": "2.12.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
+          "Swashbuckle.AspNetCore": "6.5.0"
+        },
+        "runtime": {
+          "WebApi.Infraestructure.dll": {}
+        }
+      },
       "WebApi.Models/1.0.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "2.2.5"
+          "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
+          "WebApi.Infraestructure": "1.0.0"
         },
         "runtime": {
           "WebApi.Models.dll": {}
+        }
+      },
+      "WebApi.Repository/1.0.0": {
+        "dependencies": {
+          "WebApi.Infraestructure": "1.0.0",
+          "WebApi.Models": "1.0.0",
+          "WebApi.Services": "1.0.0"
+        },
+        "runtime": {
+          "WebApi.Repository.dll": {}
+        }
+      },
+      "WebApi.Services/1.0.0": {
+        "dependencies": {
+          "WebApi.Models": "1.0.0"
+        },
+        "runtime": {
+          "WebApi.Services.dll": {}
         }
       }
     }
@@ -2446,7 +2477,22 @@
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
     },
+    "WebApi.Infraestructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
     "WebApi.Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebApi.Repository/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "WebApi.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

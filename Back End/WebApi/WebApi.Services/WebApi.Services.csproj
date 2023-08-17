@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebApi.Models\WebApi.Models.csproj" />
-    <ProjectReference Include="..\WebApi\WebApi.Aplication.csproj" />
   </ItemGroup>
 
 </Project>

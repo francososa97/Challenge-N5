@@ -12,7 +12,10 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="Dto\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi.Infraestructure\WebApi.Infraestructure.csproj" />
   </ItemGroup>
 
 </Project>

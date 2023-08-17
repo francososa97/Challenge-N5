@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using WebApi.Infraestructure;
+using WebApi.Infraestructure.Domain;
 using WebApi.Models.Interfaces;
 
 namespace WebApi.Repository
@@ -7,13 +9,15 @@ namespace WebApi.Repository
     public class PermissionRepository : IPermissionRepository
     {
 
-        public Task<ActionResult> GetPermissionsServices()
+        public List<Permiso> GetPermissionsServices()
         {
+            List<Permiso> permisos= new List<Permiso>();
             using(var context = new N5ChallengeContext())
             {
-
+                var permisionsList = context.Permisos.ToList();
+                permisos.AddRange(permisionsList);
             }
-            throw new NotImplementedException();
+            return permisos;
         }
 
         public Task<ActionResult> ModifyPermissionServices()

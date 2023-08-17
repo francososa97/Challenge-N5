@@ -2371,17 +2371,61 @@
           }
         }
       },
+      "WebApi.Infraestructure/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Elsa.Persistence.EntityFramework.Core": "2.12.0",
+          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.10",
+          "Swashbuckle.AspNetCore": "6.2.3"
+        },
+        "compile": {
+          "bin/placeholder/WebApi.Infraestructure.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebApi.Infraestructure.dll": {}
+        }
+      },
       "WebApi.Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Microsoft.AspNetCore.Mvc.Core": "2.2.5"
+          "Microsoft.AspNetCore.Mvc.Core": "2.2.5",
+          "WebApi.Infraestructure": "1.0.0"
         },
         "compile": {
           "bin/placeholder/WebApi.Models.dll": {}
         },
         "runtime": {
           "bin/placeholder/WebApi.Models.dll": {}
+        }
+      },
+      "WebApi.Repository/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "WebApi.Infraestructure": "1.0.0",
+          "WebApi.Models": "1.0.0",
+          "WebApi.Services": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WebApi.Repository.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebApi.Repository.dll": {}
+        }
+      },
+      "WebApi.Services/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "WebApi.Models": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/WebApi.Services.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/WebApi.Services.dll": {}
         }
       }
     }
@@ -6218,10 +6262,25 @@
         "version.txt"
       ]
     },
+    "WebApi.Infraestructure/1.0.0": {
+      "type": "project",
+      "path": "../WebApi.Infraestructure/WebApi.Infraestructure.csproj",
+      "msbuildProject": "../WebApi.Infraestructure/WebApi.Infraestructure.csproj"
+    },
     "WebApi.Models/1.0.0": {
       "type": "project",
       "path": "../WebApi.Models/WebApi.Models.csproj",
       "msbuildProject": "../WebApi.Models/WebApi.Models.csproj"
+    },
+    "WebApi.Repository/1.0.0": {
+      "type": "project",
+      "path": "../WebApi.Repository/WebApi.Repository.csproj",
+      "msbuildProject": "../WebApi.Repository/WebApi.Repository.csproj"
+    },
+    "WebApi.Services/1.0.0": {
+      "type": "project",
+      "path": "../WebApi.Services/WebApi.Services.csproj",
+      "msbuildProject": "../WebApi.Services/WebApi.Services.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -6229,7 +6288,9 @@
       "Elsa.Persistence.EntityFramework.Core >= 2.12.0",
       "Microsoft.EntityFrameworkCore.SqlServer >= 7.0.10",
       "Swashbuckle.AspNetCore >= 6.5.0",
-      "WebApi.Models >= 1.0.0"
+      "WebApi.Models >= 1.0.0",
+      "WebApi.Repository >= 1.0.0",
+      "WebApi.Services >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -6270,6 +6331,12 @@
           "projectReferences": {
             "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi.Models\\WebApi.Models.csproj": {
               "projectPath": "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi.Models\\WebApi.Models.csproj"
+            },
+            "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi.Repository\\WebApi.Repository.csproj": {
+              "projectPath": "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi.Repository\\WebApi.Repository.csproj"
+            },
+            "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi.Services\\WebApi.Services.csproj": {
+              "projectPath": "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi.Services\\WebApi.Services.csproj"
             }
           }
         }

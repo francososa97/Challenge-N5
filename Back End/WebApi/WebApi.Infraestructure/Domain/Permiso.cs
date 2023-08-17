@@ -1,17 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Infraestructure.Domain;
 
+[Table("Permisos")]
 public partial class Permiso
 {
+    [Column("Id")]
     public int Id { get; set; }
 
-    public string NombreEmpleado { get; set; } = null!;
+    [Column("NombreEmpleado")]
+    public string NombreEmpleado { get; set; }
 
-    public string ApellidoEmpleado { get; set; } = null!;
+    [Column("ApellidoEmpleado")]
+    public string ApellidoEmpleado { get; set; }
 
+    [Column("TipoPermiso")]
     public int TipoPermiso { get; set; }
 
+    [Column("FechaPermiso")]
     public DateTime FechaPermiso { get; set; }
 }

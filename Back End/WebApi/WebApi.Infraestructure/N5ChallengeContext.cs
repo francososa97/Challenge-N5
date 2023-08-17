@@ -15,15 +15,13 @@ public partial class N5ChallengeContext : DbContext
         : base(options)
     {
     }
-
+    //To do pasar esto a un al json https://learn.microsoft.com/es-mx/ef/core/managing-schemas/scaffolding/?tabs=dotnet-core-cli
+    private readonly string ConnectionString = "Server=DESKTOP-OGUUOAT\\SQLEXPRESS;Database=N5 Challenge; Trusted_Connection=true; TrustServerCertificate=True;";
     public virtual DbSet<Permiso> Permisos { get; set; }
 
     public virtual DbSet<TipoPermiso> TipoPermisos { get; set; }
 
-    //To do pasar esto a un secret
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=DESKTOP-OGUUOAT\\SQLEXPRESS;Database=N5 Challenge; Trusted_Connection=true; TrustServerCertificate=True;");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseSqlServer(ConnectionString);
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

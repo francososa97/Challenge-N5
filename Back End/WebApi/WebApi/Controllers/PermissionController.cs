@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApi.Models.Dto;
 using WebApi.Models.Interfaces;
 
 namespace WebApi.Aplication.Controllers
@@ -13,8 +14,8 @@ namespace WebApi.Aplication.Controllers
         {
             _permissionServices = permissionServices;
         }
-
-        public IActionResult RequestPermission()
+        [HttpPost("RequestPermission")]
+        public IActionResult RequestPermission(PermisionsDTO newPermission)
         {
             //Validar parametros
             //Si esta ok seguimos si no devlovemos un bad request
@@ -22,17 +23,18 @@ namespace WebApi.Aplication.Controllers
             _permissionServices.RequestPermissionServices();
             return Ok();
         }
-
-        public IActionResult ModifyPermission()
+        [HttpPut("ModifyPermission")]
+        public IActionResult ModifyPermission(int id,PermisionsDTO newPermission)
         {
             _permissionServices.ModifyPermissionServices();
             return Ok();
         }
-
+        [HttpGet("GetPermissions")]
         public IActionResult GetPermissions()
         {
-            _permissionServices.GetPermissionsServices();
-            return Ok();
+            var result = _permissionServices.GetPermissionsServices();
+            return Ok(result);
         }
+
     }
 }

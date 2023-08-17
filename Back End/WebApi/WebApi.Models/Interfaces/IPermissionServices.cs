@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.Models.Dto;
 
 namespace WebApi.Models.Interfaces
 {
@@ -11,6 +12,6 @@ namespace WebApi.Models.Interfaces
     {
         Task<ActionResult> RequestPermissionServices();
         Task<ActionResult> ModifyPermissionServices();
-        Task<ActionResult> GetPermissionsServices();
+        List<PermisionsDTO> GetPermissionsServices();
     }
 }

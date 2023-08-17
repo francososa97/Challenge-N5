@@ -1,3 +1,7 @@
+using WebApi.Models.Interfaces;
+using WebApi.Repository;
+using WebApi.Services;
+
 namespace WebApi
 {
     public class Program
@@ -9,6 +13,9 @@ namespace WebApi
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddCors();
+            builder.Services.AddScoped<IPermissionServices, PermissionServices>();
+            builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 
             var app = builder.Build();
 
