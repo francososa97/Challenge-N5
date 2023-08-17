@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApi.Infraestructure;
 using WebApi.Models.Interfaces;
 
 namespace WebApi.Repository
@@ -8,6 +9,10 @@ namespace WebApi.Repository
 
         public Task<ActionResult> GetPermissionsServices()
         {
+            using(var context = new N5ChallengeContext())
+            {
+
+            }
             throw new NotImplementedException();
         }
 
