@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using Rebus.Messages;
 using WebApi.Models.Dto;
 using WebApi.Models.Interfaces;
 
@@ -17,23 +19,85 @@ namespace WebApi.Aplication.Controllers
         [HttpPost("RequestPermission")]
         public IActionResult RequestPermission(PermisionsDTO newPermission)
         {
-            //Validar parametros
-            //Si esta ok seguimos si no devlovemos un bad request
-            //ahi llamamos al servicio
-            var result = _permissionServices.RequestPermissionServices(newPermission);
-            return Ok(result);
+            try
+            {
+                bool requestIsOk = newPermission.NombreEmpleado.IsNullOrEmpty()
+                   && newPermission.ApellidoEmpleado.IsNullOrEmpty()
+                   && newPermission.TipoPermiso != 0
+                   && newPermission.FechaPermiso != null;
+
+                if (requestIsOk)
+                {
+                    var result = _permissionServices.RequestPermissionServices(newPermission);
+                    return Ok(result);
+                }
+                return BadRequest("the fields sent are empty or wrong");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("an error occurred while loading a new permit");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
+
         [HttpPut("ModifyPermission")]
-        public IActionResult ModifyPermission(int id,PermisionsDTO newPermission)
+        public async Task<IActionResult> ModifyPermission(int id,PermisionsDTO newPermission)
         {
-            var result = _permissionServices.ModifyPermissionServices(id, newPermission);
-            return Ok(result);
+            try
+            {
+                if(id != 0)
+                {
+                    bool requestIsOk = newPermission.NombreEmpleado.IsNullOrEmpty()
+                                       && newPermission.ApellidoEmpleado.IsNullOrEmpty()
+                                       && newPermission.TipoPermiso != 0
+                                       && newPermission.FechaPermiso != null;
+                    if (requestIsOk)
+                    {
+                        var resultOk = await _permissionServices.ModifyPermissionServices(id, newPermission);
+                        if (resultOk)
+                            return Ok();
+                        else
+                            return BadRequest("an error occurred while getting all permissions");
+                    }
+                    return BadRequest("the fields sent are empty or wrong");
+
+                }
+                return BadRequest("the id is not correct");
+
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("an error occurred while getting all permissions");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
+
         [HttpGet("GetPermissions")]
         public IActionResult GetPermissions()
         {
-            var result = _permissionServices.GetPermissionsServices();
-            return Ok(result);
+            try
+            {
+                var result = _permissionServices.GetPermissionsServices();
+                if (result.Any())
+                    return Ok(result);
+                else
+                    return BadRequest("an error occurred while getting all permissions");
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest("an error occurred while getting all permissions");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
         }
 
     }
