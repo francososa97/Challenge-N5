@@ -17,14 +17,14 @@ namespace WebApi.Aplication.Controllers
             _permissionServices = permissionServices;
         }
         [HttpPost("RequestPermission")]
-        public IActionResult RequestPermission(PermisionsDTO newPermission)
+        public IActionResult RequestPermission(AddPermisionsDTO newPermission)
         {
             try
             {
-                bool requestIsOk = newPermission.NombreEmpleado.IsNullOrEmpty()
-                   && newPermission.ApellidoEmpleado.IsNullOrEmpty()
+                bool requestIsOk = !newPermission.NombreEmpleado.IsNullOrEmpty()
+                   && !newPermission.ApellidoEmpleado.IsNullOrEmpty()
                    && newPermission.TipoPermiso != 0
-                   && newPermission.FechaPermiso != null;
+                   && newPermission.FechaPermiso != DateTime.MinValue;
 
                 if (requestIsOk)
                 {
@@ -50,10 +50,11 @@ namespace WebApi.Aplication.Controllers
             {
                 if(id != 0)
                 {
-                    bool requestIsOk = newPermission.NombreEmpleado.IsNullOrEmpty()
-                                       && newPermission.ApellidoEmpleado.IsNullOrEmpty()
-                                       && newPermission.TipoPermiso != 0
-                                       && newPermission.FechaPermiso != null;
+                    bool requestIsOk = !newPermission.NombreEmpleado.IsNullOrEmpty()
+                       && !newPermission.ApellidoEmpleado.IsNullOrEmpty()
+                       && newPermission.TipoPermiso != 0
+                       && newPermission.FechaPermiso != DateTime.MinValue;
+
                     if (requestIsOk)
                     {
                         var resultOk = await _permissionServices.ModifyPermissionServices(id, newPermission);

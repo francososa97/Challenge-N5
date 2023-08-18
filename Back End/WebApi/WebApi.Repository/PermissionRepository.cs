@@ -18,6 +18,7 @@ namespace WebApi.Repository
                 var permisionsList = context.Permisos.ToList();
                 permisos.AddRange(permisionsList);
             }
+
             return permisos;
         }
 
@@ -26,25 +27,28 @@ namespace WebApi.Repository
             int result = 0;
             using (var context = new N5ChallengeContext())
             {
-                var permisionsList = context.Permisos.AddAsync(newPermission);
-                result = await context.SaveChangesAsync();
-            }
-            return result != -1;
-        }
+                //No le gusta la asincronicidad ni un poquito che,,,
+                var permision = context.Permisos.Where(p => p.Id == id).ToList().FirstOrDefault();
 
-        public async Task<bool> RequestPermissionServices(Permiso newPermission)
-        {
-            int result = 0;
-            using (var context = new N5ChallengeContext())
-            {
-                var permision = context.Permisos.Where(p => p.Id == newPermission.Id).ToList().FirstOrDefault();
                 permision.FechaPermiso = newPermission.FechaPermiso;
                 permision.TipoPermiso = newPermission.TipoPermiso;
                 permision.NombreEmpleado = newPermission.NombreEmpleado;
                 permision.ApellidoEmpleado = newPermission.ApellidoEmpleado;
+
                 result = await context.SaveChangesAsync();
             }
             //To do Devolver dtos con respuesta no solo bools
+            return result != -1;
+        }
+
+        public bool RequestPermissionServices(Permiso newPermission)
+        {
+            int result = 0;
+            using (var context = new N5ChallengeContext())
+            {
+                var permisionsList = context.Permisos.Add(newPermission);
+                result = context.SaveChanges();
+            }
             return result != -1;
         }
     }

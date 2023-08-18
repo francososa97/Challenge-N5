@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models.Dto
 {
-    public class PermisionsDTO
+    public class AddPermisionsDTO
     {
-        public int Id { get; set; }
         public string NombreEmpleado { get; set; } = null!;
 
         public string ApellidoEmpleado { get; set; } = null!;
