@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React,{useEffect,useState} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,6 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { getAllPermisosService } from '../Services/GetAllPermisosService.tsx';
+import { Permiso } from '../sheared/Permiso.js';
 
 interface Column {
   id: 'name' | 'apellido' | 'typepermis' | 'datepermis' | 'actions';
@@ -20,27 +22,24 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'apellido', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'name', label: 'First Name', minWidth: 170 },
+  { id: 'apellido', label: 'Last name', minWidth: 100 },
   {
     id: 'typepermis',
-    label: 'Population',
+    label: 'Type permissions',
     minWidth: 170,
-    align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'datepermis',
-    label: 'Size\u00a0(km\u00b2)',
+    label: 'Date Permisions',
     minWidth: 170,
-    align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
     id: 'actions',
     label: 'Actions',
     minWidth: 170,
-    align: 'right',
     format: (value: number) => value.toFixed(2),
   },
 ];
@@ -81,9 +80,22 @@ const rows = [
   createData('Brazil', 'BR', 210147125, 8515767),
 ];
 
-export default function StickyHeadTable() {
+export default function Tablepermissions() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [permisos, setPermisos] = useState<Permiso[]>([]);
+
+  useEffect(() => {
+    const GetPermisos = async () => {
+      try {
+        const response = await getAllPermisosService.getAllPermisos();
+        setPermisos(response);
+      } catch (error) {
+        console.error('Error fetching permisos:', error);
+      }
+    };
+    GetPermisos();
+  }, [permisos]);
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -95,7 +107,7 @@ export default function StickyHeadTable() {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper style={{ margin: '10' }} sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -112,24 +124,26 @@ export default function StickyHeadTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <>
-                            {column.id !== "actions"
-                                ?<TableCell key={column.id} align={column.align}>{column.format && typeof value === 'number'? column.format(value): value}</TableCell>
-                                :<TableCell align="right"><IconButton color="secondary" aria-label="add an alarm"><EditIcon /></IconButton><IconButton color="primary" aria-label="add to shopping cart"><VisibilityIcon /></IconButton></TableCell>}
-                        </>
-                      );
-                    })}
+          {permisos.map(permiso => {
+            return (
+                <>
+                  <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell>{permiso.nombreEmpleado}</TableCell>
+                    <TableCell>{permiso.apellidoEmpleado}</TableCell>
+                    <TableCell>{permiso.tipoPermiso}</TableCell>
+                    <TableCell>{permiso.fechaPermiso.toString()}</TableCell>
+                    <TableCell>
+                        <IconButton color="secondary" aria-label="add an alarm">
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton color="primary" aria-label="add to shopping cart">
+                            <VisibilityIcon />
+                        </IconButton>
+                    </TableCell>
                   </TableRow>
-                );
-              })}
+                </>
+            );
+          })}
           </TableBody>
         </Table>
       </TableContainer>

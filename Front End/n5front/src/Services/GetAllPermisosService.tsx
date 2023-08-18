@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Permiso } from '../sheared/Permiso';
-import { Endpoints } from '../sheared/endpoints';
+import { Endpoints } from '../sheared/endpoints.tsx';
 
 class GetAllPermisosService {
     getAllPermisos = async (): Promise<Permiso[]> => {

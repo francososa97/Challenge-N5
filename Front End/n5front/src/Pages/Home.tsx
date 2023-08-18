@@ -6,12 +6,12 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Test from "../Components/test.tsx";
-import Test2 from "../Components/test2.tsx";
+import Tablepermissions from "../Components/Tablepermissions.tsx";
+import CreatePermission from '../Components/CreatePermission.tsx';
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+const Home = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="lg">
@@ -27,13 +27,14 @@ export default function SignIn() {
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
+          <Typography component="h1" variant="h5" >
+            Permission
           </Typography>
-          <Test/>
-          <Test2/>
+            <CreatePermission/>
+          <Tablepermissions/>
         </Box>
       </Container>
     </ThemeProvider>
   );
 }
+export default Home;

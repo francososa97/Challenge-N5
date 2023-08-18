@@ -18,6 +18,11 @@ namespace WebApi
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 
             var app = builder.Build();
+            app.UseCors(builder => builder
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .AllowAnyOrigin()
+            );
 
             if (app.Environment.IsDevelopment())
             {
