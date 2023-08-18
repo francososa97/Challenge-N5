@@ -12,7 +12,6 @@ import Test2 from "../Components/test2.tsx";
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="lg">

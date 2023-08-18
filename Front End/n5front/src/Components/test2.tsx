@@ -12,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 interface Column {
-  id: 'name' | 'code' | 'population' | 'size' | 'density';
+  id: 'name' | 'apellido' | 'typepermis' | 'datepermis' | 'actions';
   label: string;
   minWidth?: number;
   align?: 'right';
@@ -21,27 +21,20 @@ interface Column {
 
 const columns: readonly Column[] = [
   { id: 'name', label: 'Name', minWidth: 170 },
-  { id: 'code', label: 'ISO\u00a0Code', minWidth: 100 },
+  { id: 'apellido', label: 'ISO\u00a0Code', minWidth: 100 },
   {
-    id: 'population',
+    id: 'typepermis',
     label: 'Population',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
   },
   {
-    id: 'size',
+    id: 'datepermis',
     label: 'Size\u00a0(km\u00b2)',
     minWidth: 170,
     align: 'right',
     format: (value: number) => value.toLocaleString('en-US'),
-  },
-  {
-    id: 'density',
-    label: 'Density',
-    minWidth: 170,
-    align: 'right',
-    format: (value: number) => value.toFixed(2),
   },
   {
     id: 'actions',
@@ -127,21 +120,13 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        <>
+                            {column.id !== "actions"
+                                ?<TableCell key={column.id} align={column.align}>{column.format && typeof value === 'number'? column.format(value): value}</TableCell>
+                                :<TableCell align="right"><IconButton color="secondary" aria-label="add an alarm"><EditIcon /></IconButton><IconButton color="primary" aria-label="add to shopping cart"><VisibilityIcon /></IconButton></TableCell>}
+                        </>
                       );
                     })}
-                    <TableCell align="right">
-                        <IconButton color="secondary" aria-label="add an alarm">
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton color="primary" aria-label="add to shopping cart">
-                            <VisibilityIcon />
-                        </IconButton>
-                    </TableCell>
                   </TableRow>
                 );
               })}

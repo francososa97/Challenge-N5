@@ -10,8 +10,8 @@ namespace WebApi.Models.Interfaces
 {
     public interface IPermissionServices
     {
-        Task<ActionResult> RequestPermissionServices();
-        Task<ActionResult> ModifyPermissionServices();
+        Task<bool> RequestPermissionServices(PermisionsDTO newPermission);
+        Task<bool> ModifyPermissionServices(int id, PermisionsDTO newPermission);
         List<PermisionsDTO> GetPermissionsServices();
     }
 }

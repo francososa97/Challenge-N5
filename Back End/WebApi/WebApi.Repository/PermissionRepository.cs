@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Infraestructure;
 using WebApi.Infraestructure.Domain;
+using WebApi.Models.Dto;
 using WebApi.Models.Interfaces;
 
 namespace WebApi.Repository
@@ -20,14 +21,31 @@ namespace WebApi.Repository
             return permisos;
         }
 
-        public Task<ActionResult> ModifyPermissionServices()
+        public async Task<bool> ModifyPermissionServices(int id, Permiso newPermission)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            using (var context = new N5ChallengeContext())
+            {
+                var permisionsList = context.Permisos.AddAsync(newPermission);
+                result = await context.SaveChangesAsync();
+            }
+            return result != -1;
         }
 
-        public Task<ActionResult> RequestPermissionServices()
+        public async Task<bool> RequestPermissionServices(Permiso newPermission)
         {
-            throw new NotImplementedException();
+            int result = 0;
+            using (var context = new N5ChallengeContext())
+            {
+                var permision = context.Permisos.Where(p => p.Id == newPermission.Id).ToList().FirstOrDefault();
+                permision.FechaPermiso = newPermission.FechaPermiso;
+                permision.TipoPermiso = newPermission.TipoPermiso;
+                permision.NombreEmpleado = newPermission.NombreEmpleado;
+                permision.ApellidoEmpleado = newPermission.ApellidoEmpleado;
+                result = await context.SaveChangesAsync();
+            }
+            //To do Devolver dtos con respuesta no solo bools
+            return result != -1;
         }
     }
 }

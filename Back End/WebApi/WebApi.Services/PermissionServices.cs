@@ -23,14 +23,18 @@ namespace WebApi.Services
 
 
 
-        public Task<ActionResult> ModifyPermissionServices()
+        public async Task<bool> ModifyPermissionServices(int id,PermisionsDTO newPermission)
         {
-            throw new NotImplementedException();
+            var permiso = BuildPermisions(newPermission);
+            bool isOk= await permissionRepository.ModifyPermissionServices(id, permiso);
+            return isOk;
         }
 
-        public Task<ActionResult> RequestPermissionServices()
+        public async Task<bool> RequestPermissionServices(PermisionsDTO newPermission)
         {
-            throw new NotImplementedException();
+            var permiso = BuildPermisions(newPermission);
+            bool isOk = await permissionRepository.RequestPermissionServices(permiso);
+            return isOk;
         }
 
 
@@ -50,6 +54,18 @@ namespace WebApi.Services
                 permisosDTO.Add(permisoDTO);
             });
             return permisosDTO;
+        }
+
+        private static Permiso BuildPermisions(PermisionsDTO permisoDTO)
+        {
+            Permiso permiso = new Permiso()
+            {
+                NombreEmpleado = permisoDTO.NombreEmpleado,
+                ApellidoEmpleado = permisoDTO.ApellidoEmpleado,
+                FechaPermiso = permisoDTO.FechaPermiso,
+                TipoPermiso = permisoDTO.TipoPermiso,
+            };
+            return permiso;
         }
         #endregion
     }

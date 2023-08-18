@@ -8,6 +8,7 @@ namespace WebApi.Infraestructure.Domain;
 public partial class Permiso
 {
     [Column("Id")]
+    //pasar int a guid
     public int Id { get; set; }
 
     [Column("NombreEmpleado")]

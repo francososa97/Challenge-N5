@@ -20,14 +20,14 @@ namespace WebApi.Aplication.Controllers
             //Validar parametros
             //Si esta ok seguimos si no devlovemos un bad request
             //ahi llamamos al servicio
-            _permissionServices.RequestPermissionServices();
-            return Ok();
+            var result = _permissionServices.RequestPermissionServices(newPermission);
+            return Ok(result);
         }
         [HttpPut("ModifyPermission")]
         public IActionResult ModifyPermission(int id,PermisionsDTO newPermission)
         {
-            _permissionServices.ModifyPermissionServices();
-            return Ok();
+            var result = _permissionServices.ModifyPermissionServices(id, newPermission);
+            return Ok(result);
         }
         [HttpGet("GetPermissions")]
         public IActionResult GetPermissions()
