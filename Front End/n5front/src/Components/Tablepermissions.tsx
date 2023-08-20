@@ -12,6 +12,8 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getAllPermisosService } from '../Services/GetAllPermisosService.tsx';
 import { Permiso } from '../sheared/Permiso.js';
+import ModalToEdit from  '../Components/ModalToEdit.tsx';
+import ModalToView from  '../Components/ModalToView.tsx';
 
 interface Column {
   id: 'name' | 'apellido' | 'typepermis' | 'datepermis' | 'actions';
@@ -81,6 +83,7 @@ const rows = [
 ];
 
 export default function Tablepermissions() {
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [permisos, setPermisos] = useState<Permiso[]>([]);
@@ -133,12 +136,8 @@ export default function Tablepermissions() {
                     <TableCell>{permiso.tipoPermiso}</TableCell>
                     <TableCell>{permiso.fechaPermiso.toString()}</TableCell>
                     <TableCell>
-                        <IconButton color="secondary" aria-label="add an alarm">
-                            <EditIcon />
-                        </IconButton>
-                        <IconButton color="primary" aria-label="add to shopping cart">
-                            <VisibilityIcon />
-                        </IconButton>
+                      <ModalToEdit permiso ={permiso}/>
+                      <ModalToView permiso ={permiso}/>
                     </TableCell>
                   </TableRow>
                 </>

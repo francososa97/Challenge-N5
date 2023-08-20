@@ -8,6 +8,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Tablepermissions from "../Components/Tablepermissions.tsx";
 import CreatePermission from '../Components/CreatePermission.tsx';
+import Grid from '@mui/material/Grid';
+import PermisionContext from '../Context/PermisionContext.tsx';
 
 const defaultTheme = createTheme();
 
@@ -24,14 +26,20 @@ const Home = () => {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5" >
-            Permission
-          </Typography>
-            <CreatePermission/>
-          <Tablepermissions/>
+          <PermisionContext>
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5" >
+              Permission
+            </Typography>
+            <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <CreatePermission/>
+                </Grid>
+              </Grid>
+            <Tablepermissions/>
+          </PermisionContext>
         </Box>
       </Container>
     </ThemeProvider>

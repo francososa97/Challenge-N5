@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Permiso } from '../sheared/Permiso';
-import { Endpoints } from '../sheared/endpoints';
+import { Endpoints } from '../sheared/endpoints.tsx';
 
 class PutPermisosService {
     PutPermisos = async (id: Int16Array ,permiso:Permiso): Promise<Permiso[]> => {
@@ -13,6 +13,5 @@ class PutPermisosService {
         }
       };
 }
-
 
 export const putPermisosService = new PutPermisosService();
