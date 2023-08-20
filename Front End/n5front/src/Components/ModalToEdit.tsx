@@ -7,15 +7,18 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import { putPermisosService } from '../Services/PutlPermisosService.tsx';
 import { Permiso } from '../sheared/Permiso.js';
+import SelectTypePermission from './SelectTypePermission.tsx';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import Datepicker from './Forms/Datepicker.tsx';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -34,53 +37,37 @@ const style = {
   
     const {permiso} = props;
     const [open, setOpen] = React.useState(false);
-    const [age, setAge] = React.useState('');
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const [nombreEmpleado, setNombreEmpleado] = React.useState('');
-    const [apellidoEmpleado, setApellidoEmpleado] = React.useState('');
-    const [datePermission, setDatePermission] = React.useState('');
-    const [typePermission, setTypePermission] = React.useState('');
-    const [callServices, setCallServices] = React.useState('false');
+    const [nombreEmpleado, setNombreEmpleado] = React.useState(permiso.nombreEmpleado);
+    const [apellidoEmpleado, setApellidoEmpleado] = React.useState(permiso.apellidoEmpleado);
+    const [datePermission, setDatePermission] = React.useState(permiso.fechaPermiso);
+    const [typePermission, setTypePermission] = React.useState(permiso.tipoPermiso);
+    const [callServices, setCallServices] = React.useState(false);
 
+
+    // To do refactorizar
+//Limpiar
+//agregar validaciones.
 
     const BuildPermission = () => {
-        return {Id:permiso.Id,nombreEmpleado,apellidoEmpleado,datePermission,typePermission}
+        return {id:permiso.Id,nombreEmpleado,apellidoEmpleado,datePermission,typePermission}
     }
     
     useEffect(() => {
         //Validar que el build se creo correctamente
         const EditPermission = async (Id:Int16Array , newPermission: Permiso) => {
           try {
-            const response = await putPermisosService.PutPermisosService(Id,newPermission);
+            const response = await putPermisosService.PutPermisos(Id,newPermission);
             console.log('response', response );
           } catch (error) {
             console.error('Error fetching permisos:', error);
           }
         };
         let newPermission = BuildPermission();
-        EditPermission(permiso.Id,newPermission);
+        EditPermission(permiso.id,newPermission);
       }, [callServices]);
-
-// To do refactorizar
-//Limpiar
-//agregar validaciones.
-
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-
-    const handleChange = (event) => {
-        setAge(event.target.value as string);
-        setTypePermission(event.target.value);
-    }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
   return (
     <div>
@@ -107,7 +94,7 @@ const style = {
             </Typography>
 
             <FormControl fullWidth>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={() => setCallServices(true)} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -136,31 +123,10 @@ const style = {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  defaultValue={permiso.fechaPermiso}
-                  onChange={(e) => setDatePermission(e.target.value)}
-                />
+                <Datepicker datePermission={datePermission}  setDatePermission={setDatePermission}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                  defaultValue={permiso.tipoPermiso}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
+                  <SelectTypePermission typePermission={typePermission} setTypePermission={setTypePermission} />
               </Grid>
             </Grid>
             <Button
@@ -168,7 +134,7 @@ const style = {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={ () => setCallServices("true")}
+              onClick={ () => setCallServices(true)}
             >
               Edit permission
             </Button>

@@ -15,6 +15,8 @@ const AlertError = (props) => {
     <Box sx={{ width: '100%' }}>
       <Collapse in={open}>
         <Alert
+          variant="filled"
+          severity="error"
           action={
             <IconButton
               aria-label="close"
@@ -32,15 +34,6 @@ const AlertError = (props) => {
           {error}
         </Alert>
       </Collapse>
-      <Button
-        disabled={open}
-        variant="outlined"
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        Re-open
-      </Button>
     </Box>
   );
 }

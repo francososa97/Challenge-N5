@@ -1,22 +1,17 @@
-import * as React from 'react';
+import React, {useContext,useState} from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Grid from '@mui/material/Grid';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import SelectTypePermission from './SelectTypePermission.tsx';
+import Button from '@mui/material/Button';
+import Datepicker from './Forms/Datepicker.tsx';
 
 
 const style = {
@@ -35,23 +30,9 @@ const style = {
 const ModalToView = (props) => {
 
   const {permiso} = props;
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [age, setAge] = React.useState('');
-
-  const handleChange = (event) => {
-    setAge(event.target.value as string);
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
   return (
     <div>
@@ -78,7 +59,7 @@ const ModalToView = (props) => {
             </Typography>
 
             <FormControl fullWidth>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -104,31 +85,14 @@ const ModalToView = (props) => {
 
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  defaultValue={permiso.fechaPermiso}
-                />
+              <Grid item xs={8} sm={6}>
+                <Datepicker datePermission={permiso.fechaPermiso}/>
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                  defaultValue={permiso.tipoPermiso}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
+              <Grid item xs={2} sm={6}>
+                <SelectTypePermission typePermission={permiso.tipoPermiso}/>
+              </Grid>
+              <Grid item xs={12} sm={12}>
+              <Button variant="text" onClick={()=>handleClose()}>Close</Button>
               </Grid>
             </Grid>
           </Box>

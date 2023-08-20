@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react';
+import React,{useEffect,useState,useContext} from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,6 +14,7 @@ import { getAllPermisosService } from '../Services/GetAllPermisosService.tsx';
 import { Permiso } from '../sheared/Permiso.js';
 import ModalToEdit from  '../Components/ModalToEdit.tsx';
 import ModalToView from  '../Components/ModalToView.tsx';
+import { PermisionContext } from '../Context/PermisionContext.tsx';
 
 interface Column {
   id: 'name' | 'apellido' | 'typepermis' | 'datepermis' | 'actions';
@@ -54,36 +55,10 @@ interface Data {
   density: number;
 }
 
-function createData(
-  name: string,
-  code: string,
-  population: number,
-  size: number,
-): Data {
-  const density = population / size;
-  return { name, code, population, size};
-}
+ const Tablepermissions = () => {
 
-const rows = [
-  createData('India', 'IN', 1324171354, 3287263),
-  createData('China', 'CN', 1403500365, 9596961),
-  createData('Italy', 'IT', 60483973, 301340),
-  createData('United States', 'US', 327167434, 9833520),
-  createData('Canada', 'CA', 37602103, 9984670),
-  createData('Australia', 'AU', 25475400, 7692024),
-  createData('Germany', 'DE', 83019200, 357578),
-  createData('Ireland', 'IE', 4857000, 70273),
-  createData('Mexico', 'MX', 126577691, 1972550),
-  createData('Japan', 'JP', 126317000, 377973),
-  createData('France', 'FR', 67022000, 640679),
-  createData('United Kingdom', 'GB', 67545757, 242495),
-  createData('Russia', 'RU', 146793744, 17098246),
-  createData('Nigeria', 'NG', 200962417, 923768),
-  createData('Brazil', 'BR', 210147125, 8515767),
-];
 
-export default function Tablepermissions() {
-
+  const {typeOfPermission}  = useContext(PermisionContext);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [permisos, setPermisos] = useState<Permiso[]>([]);
@@ -127,17 +102,17 @@ export default function Tablepermissions() {
             </TableRow>
           </TableHead>
           <TableBody>
-          {permisos.map(permiso => {
+          {permisos.map((permiso,index )=> {
             return (
                 <>
                   <TableRow hover role="checkbox" tabIndex={-1}>
                     <TableCell>{permiso.nombreEmpleado}</TableCell>
                     <TableCell>{permiso.apellidoEmpleado}</TableCell>
-                    <TableCell>{permiso.tipoPermiso}</TableCell>
+                    <TableCell>{typeOfPermission[permiso.tipoPermiso]}</TableCell>
                     <TableCell>{permiso.fechaPermiso.toString()}</TableCell>
                     <TableCell>
-                      <ModalToEdit permiso ={permiso}/>
-                      <ModalToView permiso ={permiso}/>
+                      <ModalToEdit key={permiso.id} permiso ={permiso}/>
+                      <ModalToView key={index} permiso ={permiso}/>
                     </TableCell>
                   </TableRow>
                 </>
@@ -149,7 +124,7 @@ export default function Tablepermissions() {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={permisos.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -158,3 +133,5 @@ export default function Tablepermissions() {
     </Paper>
   );
 }
+
+export default Tablepermissions;

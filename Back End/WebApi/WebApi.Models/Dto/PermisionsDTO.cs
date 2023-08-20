@@ -15,6 +15,6 @@ namespace WebApi.Models.Dto
 
         public int TipoPermiso { get; set; }
 
-        public DateTime FechaPermiso { get; set; }
+        public string FechaPermiso { get; set; }
     }
 }

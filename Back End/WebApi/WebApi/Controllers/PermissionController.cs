@@ -23,8 +23,8 @@ namespace WebApi.Aplication.Controllers
             {
                 bool requestIsOk = !newPermission.NombreEmpleado.IsNullOrEmpty()
                    && !newPermission.ApellidoEmpleado.IsNullOrEmpty()
-                   && newPermission.TipoPermiso != 0
-                   && newPermission.FechaPermiso != DateTime.MinValue;
+                   && !newPermission.FechaPermiso.IsNullOrEmpty()
+                   && newPermission.TipoPermiso != 0;
 
                 if (requestIsOk)
                 {
@@ -43,8 +43,8 @@ namespace WebApi.Aplication.Controllers
             }
         }
 
-        [HttpPut("ModifyPermission")]
-        public async Task<IActionResult> ModifyPermission(int id,PermisionsDTO newPermission)
+        [HttpPut("ModifyPermission/{id}")]
+        public async Task<IActionResult> ModifyPermission(int id, PermisionsDTO newPermission)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace WebApi.Aplication.Controllers
                     bool requestIsOk = !newPermission.NombreEmpleado.IsNullOrEmpty()
                        && !newPermission.ApellidoEmpleado.IsNullOrEmpty()
                        && newPermission.TipoPermiso != 0
-                       && newPermission.FechaPermiso != DateTime.MinValue;
+                       && !newPermission.FechaPermiso.IsNullOrEmpty();
 
                     if (requestIsOk)
                     {

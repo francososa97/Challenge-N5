@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 import { postPermisosService } from '../Services/PostPermisosService.tsx';
 import SelectTypePermission from './SelectTypePermission.tsx';
 import ErrorList from './Forms/ErrorList.tsx';
+import Datepicker from './Forms/Datepicker.tsx';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -76,23 +77,18 @@ const CreatePermission = () => {
       }
     };
     
-    useEffect( () => {
-
-    },[errors])
   const handleSubmit = () => {
+        setErrors([])
         debugger;
          if(validateDate())
          {
+            debugger;
             let newPermission = BuildPermission();
             CreatePermission(newPermission);
          }
          else
-         {
           setCallServices(false);
-          setErrors([])
-         }
   };
-
   return (
     <div>
       <Button onClick={handleOpen}>Create permission</Button>
@@ -144,21 +140,10 @@ const CreatePermission = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  defaultValue={datePermission}
-                  onChange={(e) => setDatePermission(e.target.value)}
-                />
+                <Datepicker datePermission={datePermission}  setDatePermission={setDatePermission}/>
               </Grid>
               <Grid item xs={12} sm={6}>
-
                   <SelectTypePermission typeOfPermission={typePermission} setTypePermission={setTypePermission} />
-
               </Grid>
             </Grid>
             <Button

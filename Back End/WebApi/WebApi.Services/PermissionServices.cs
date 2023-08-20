@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.SqlServer.Server;
 using WebApi.Infraestructure.Domain;
 using WebApi.Models.Dto;
 using WebApi.Models.Interfaces;
@@ -52,9 +53,10 @@ namespace WebApi.Services
             {
                 PermisionsDTO permisoDTO = new PermisionsDTO()
                 {
+                    Id = permiso.Id,
                     NombreEmpleado = permiso.NombreEmpleado,
                     ApellidoEmpleado = permiso.ApellidoEmpleado,
-                    FechaPermiso = permiso.FechaPermiso,
+                    FechaPermiso = permiso.FechaPermiso.ToString("dd-MM-yyyy"),
                     TipoPermiso = permiso.TipoPermiso,
                 };
                 permisosDTO.Add(permisoDTO);
@@ -64,12 +66,13 @@ namespace WebApi.Services
 
         private static Permiso BuildPermisions(PermisionsDTO permisoDTO)
         {
+            DateTime.TryParseExact(permisoDTO.FechaPermiso, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime fechaConvertida);
             Permiso permiso = new Permiso()
-            {
+            {   
                 Id = permisoDTO.Id,
                 NombreEmpleado = permisoDTO.NombreEmpleado,
                 ApellidoEmpleado = permisoDTO.ApellidoEmpleado,
-                FechaPermiso = permisoDTO.FechaPermiso,
+                FechaPermiso = fechaConvertida,
                 TipoPermiso = permisoDTO.TipoPermiso,
             };
             return permiso;
@@ -77,12 +80,13 @@ namespace WebApi.Services
 
         private static Permiso BuildAddPermisions(AddPermisionsDTO permisoDTO)
         {
+            DateTime.TryParseExact(permisoDTO.FechaPermiso, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime fechaConvertida);
             Permiso permiso = new Permiso()
             {
                 NombreEmpleado = permisoDTO.NombreEmpleado,
                 ApellidoEmpleado = permisoDTO.ApellidoEmpleado,
-                FechaPermiso = permisoDTO.FechaPermiso,
-                TipoPermiso = permisoDTO.TipoPermiso,
+                FechaPermiso = fechaConvertida,
+                TipoPermiso = (int)permisoDTO.TipoPermiso,
             };
             return permiso;
         }
