@@ -1,4 +1,4 @@
-import React,{useEffect,useContext} from 'react';
+import React,{useEffect} from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -10,6 +10,7 @@ import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import { postPermisosService } from '../Services/PostPermisosService.tsx';
 import SelectTypePermission from './SelectTypePermission.tsx';
+import ErrorList from './Forms/ErrorList.tsx';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -26,42 +27,70 @@ const style = {
 
 const CreatePermission = () => {
 
-  const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [age, setAge] = React.useState('');
+  const [open, setOpen] = React.useState(false);
   const [nombreEmpleado, setNombreEmpleado] = React.useState('');
   const [apellidoEmpleado, setApellidoEmpleado] = React.useState('');
   const [datePermission, setDatePermission] = React.useState('');
   const [typePermission, setTypePermission] = React.useState('');
-  const [callServices, setCallServices] = React.useState('false');
+  const [callServices, setCallServices] = React.useState(false);
+  const [errors, setErrors] = React.useState([]);
 
 
   const BuildPermission = () => {
       return {nombreEmpleado,apellidoEmpleado,datePermission,typePermission}
   }
-  
-  useEffect(() => {
-      //Validar que el build se creo correctamente
-      const CreatePermission = async (newPermission: Permiso) => {
-        try {
-          const response = await postPermisosService.PostPermisos(newPermission);
-          console.log('response', response );
-        } catch (error) {
-          console.error('Error fetching permisos:', error);
-        }
-      };
-      let newPermission = BuildPermission();
-      CreatePermission(newPermission);
-    }, [callServices]);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const validateDate = () => {
+      let isOkValidate = true;
+      if(nombreEmpleado === "")
+      {
+        setErrors(['The name employ is empty']);
+        isOkValidate = false;
+      }
+      if(apellidoEmpleado === "")
+      {
+        setErrors(['The last name employ is empty']);
+        isOkValidate = false;
+      }
+      if(datePermission === "")
+      {
+        setErrors(['The name employ is empty']);
+        isOkValidate = false;
+      }
+      if(typePermission === "")
+      {
+        setErrors(['The name employ is empty']);
+        isOkValidate = false;
+      }
+      return isOkValidate;
+  }
+  
+    const CreatePermission = async (newPermission: Permiso) => {
+      try {
+        const response = await postPermisosService.PostPermisos(newPermission);
+        console.log('response', response );
+      } catch (error) {
+        console.error('Error fetching permisos:', error);
+      }
+    };
+    
+    useEffect( () => {
+
+    },[errors])
+  const handleSubmit = () => {
+        debugger;
+         if(validateDate())
+         {
+            let newPermission = BuildPermission();
+            CreatePermission(newPermission);
+         }
+         else
+         {
+          setCallServices(false);
+          setErrors([])
+         }
   };
 
   return (
@@ -85,9 +114,9 @@ const CreatePermission = () => {
             <Typography id="transition-modal-title" variant="h6" component="h2">
               Create permission
             </Typography>
-
+            {errors.length > 0 ? <ErrorList errors={errors}/> :null}
             <FormControl fullWidth>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Box component="form" noValidate onSubmit={() => handleSubmit()} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
