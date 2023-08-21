@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 const SelectTypePermission = (props) => {
 
     const {typePermission,setTypePermission} = props;
-    const {typeOfPermission}  = useContext(PermisionContext);
+    const typeOfPermission = useContext(PermisionContext);
 
     const handleChange = ( value ) => {
         const typePermissionId = typeOfPermission.indexOf(value) + 1;

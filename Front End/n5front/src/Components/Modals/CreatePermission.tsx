@@ -13,6 +13,7 @@ import SelectTypePermission from '../Forms/SelectTypePermission.tsx';
 import ErrorList from '../Forms/ErrorList.tsx';
 import Datepicker from '../Forms/Datepicker.tsx';
 import Swal from 'sweetalert2'
+import Permiso from '../../sheared/Permiso.tsx';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -37,7 +38,7 @@ const CreatePermission = () => {
   const [datePermission, setDatePermission] = React.useState('');
   const [typePermission, setTypePermission] = React.useState(0);
   const [callServices, setCallServices] = React.useState(false);
-  const [errors, setErrors] = React.useState([]);
+  const [errors, setErrors] = React.useState<string[]>([]);
   const [disableCreate, setDisableCreate] = React.useState(true);
   
   useEffect(() => {
@@ -62,30 +63,36 @@ const CreatePermission = () => {
 
   //To do ver que pasa que no fuinca las validaciones
   const validateDate = () => {
+    //  To do agregar validaciones.
       let isOkValidate = true;
       if(nombreEmpleado === "")
       {
-        setErrors(['The name employ is empty']);
+        let newErrors = [...errors,'Employee name is empty'];
+        setErrors(newErrors);
         isOkValidate = false;
       }
       if(apellidoEmpleado === "")
       {
-        setErrors(['The last name employ is empty']);
+        let newErrors = [...errors,'the employee last name is empty'];
+        setErrors(newErrors);
         isOkValidate = false;
       }
       if(datePermission === "")
       {
-        setErrors(['The name employ is empty']);
+        let newErrors = [...errors,'The name employ is empty'];
+        setErrors(newErrors);
         isOkValidate = false;
       }
-      if(typePermission === "")
+      if(typePermission === 0)
       {
-        setErrors(['The name employ is empty']);
+        let newErrors = [...errors,'permission date is wrong'];
+        setErrors(newErrors);
         isOkValidate = false;
       }
+      //Validar que cambiamos algo si no dar el aviso
       return isOkValidate;
   }
-  
+
     const CreatePermission = async (newPermission: Permiso) => {
       try {
         const response = await postPermisosService.PostPermisos(newPermission);

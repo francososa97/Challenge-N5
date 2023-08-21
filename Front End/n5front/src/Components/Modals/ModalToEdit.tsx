@@ -56,7 +56,6 @@ const style = {
   
     }, [nombreEmpleado,apellidoEmpleado,datePermission,typePermission])
 
-    //To do Agregar sweet alerts
     // To do refactorizar
     // To do Limpiar
     const BuildPermission = () => {
