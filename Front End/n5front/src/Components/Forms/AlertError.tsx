@@ -9,7 +9,6 @@ const AlertError = (props) => {
     
   const [open, setOpen] = React.useState(true);
   const {error} = props;
-  debugger;
   return (
     <Box sx={{ width: '100%' }}>
       <Collapse in={open}>
