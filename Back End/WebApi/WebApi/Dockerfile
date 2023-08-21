@@ -1,19 +1,26 @@
-From mcr.microsoft.com/dotnet/sdk:6.0 as build
-Workdir webapp
+#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
-Expose 80
-Expose 5024
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-#copy projects file
-COPY ./*.csproj ./
-RUN dotnet restore
-
-# Copy All
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["WebApi/WebApi.Aplication.csproj", "WebApi/"]
+COPY ["WebApi.Models/WebApi.Models.csproj", "WebApi.Models/"]
+COPY ["WebApi.Infraestructure/WebApi.Infraestructure.csproj", "WebApi.Infraestructure/"]
+COPY ["WebApi.Repository/WebApi.Repository.csproj", "WebApi.Repository/"]
+COPY ["WebApi.Services/WebApi.Services.csproj", "WebApi.Services/"]
+RUN dotnet restore "WebApi/WebApi.Aplication.csproj"
 COPY . .
-Run dotnet publish -c Release -o Dependencias
+WORKDIR "/src/WebApi"
+RUN dotnet build "WebApi.Aplication.csproj" -c Release -o /app/build
 
-#Build Image
-From mcr.microsoft.com/dotnet/sdk:6.0
-WORKDIR /webapp
-copy --from=build /webapp/out .
-ENTRYPOINT ["dotnet","WebApi.Aplication.dll"]
+FROM build AS publish
+RUN dotnet publish "WebApi.Aplication.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "WebApi.Aplication.dll"]
