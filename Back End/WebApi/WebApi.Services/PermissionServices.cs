@@ -32,17 +32,17 @@ namespace WebApi.Services
         public async Task<GeneralDTOResponse> ModifyPermissionServices(int id,PermisionsDTO newPermission)
         {
             var permiso = BuildPermisions(newPermission);
-            var newPermissionResponse = await _unitOfWork.PermissionRepository.ModifyPermissionRepository(id, permiso);
-            string mensagge = newPermissionResponse == permiso ? "successful edit permission" : "an error occurred while edit the permission";
-            return BuildResponseDto(newPermissionResponse == permiso, mensagge, new List<PermisionsDTO>(), newPermission);
+            bool isOk = await _unitOfWork.PermissionRepository.ModifyPermissionRepository(id, permiso);
+            string mensagge = isOk ? "successful edit permission" : "an error occurred while edit the permission";
+            return BuildResponseDto(isOk, mensagge, new List<PermisionsDTO>(), newPermission);
         }
 
         public async Task<GeneralDTOResponse> RequestPermissionServices(AddPermisionsDTO newPermission)
         {
             var permiso = BuildAddPermisions(newPermission);
-            Permiso newPermissionCreated = await _unitOfWork.PermissionRepository.RequestPermissionRepository(permiso);
-            string mensagge = newPermissionCreated == permiso ? "successful create permission" : "an error occurred while create the permission";
-            return BuildResponseDto(newPermissionCreated == permiso, mensagge, new List<PermisionsDTO>(), new PermisionsDTO());
+            bool isOk = await _unitOfWork.PermissionRepository.RequestPermissionRepository(permiso);
+            string mensagge = isOk ? "successful create permission" : "an error occurred while create the permission";
+            return BuildResponseDto(isOk, mensagge, new List<PermisionsDTO>(), new PermisionsDTO());
         }
 
 

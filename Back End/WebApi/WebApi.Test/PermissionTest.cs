@@ -20,6 +20,7 @@ namespace WebApi.Test
         {
             _permissionRepository = new Mock<IPermissionRepository>();
             _permissionServices = new Mock<IPermissionServices>();
+            _unitOfWorck = new Mock<IUnitOfWork>();
         }
 
         [TestMethod]
@@ -31,6 +32,7 @@ namespace WebApi.Test
             List<Permiso> permisos= new List<Permiso>();
             permisos.Add(permiso);
 
+            _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
             _permissionRepository.Setup(a => a.GetPermissionsRepository()).ReturnsAsync(permisos);
             var getPermissionsServices = GetPermissionsServices();
 
@@ -42,21 +44,24 @@ namespace WebApi.Test
             Assert.IsTrue(result.Results.Count > 0);
             Assert.IsTrue(result.Results.FirstOrDefault().NombreEmpleado.Equals("testOk"));
             Assert.IsTrue(result.Results.FirstOrDefault().NombreEmpleado.Equals("testOk"));
+            Assert.IsTrue(result.Message == "successful Get all permissions");
         }
 
         [TestMethod]
         public async void GetAllPermissionsFaill()
         {
             // Arrange
+            _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
             _permissionRepository.Setup(a => a.GetPermissionsRepository()).ReturnsAsync(new List<Permiso>());
             var getPermissionsServices = GetPermissionsServices();
-
             // Act
             var result = await getPermissionsServices.GetPermissionsServices();
 
             // Assert
             Assert.IsFalse(result.Results.Any());
             Assert.IsFalse(result.IsOk);
+            Assert.IsTrue(result.Message == "an error occurred while Get all the permission");
+            
         }
 
         [TestMethod]
@@ -71,7 +76,8 @@ namespace WebApi.Test
                 TipoPermiso = TypePermision.Get
             };
 
-            _permissionRepository.Setup(a => a.RequestPermissionRepository((It.IsAny<Permiso>()))).Returns(Task.FromResult(It.IsAny<Permiso>()));
+            _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
+            _permissionRepository.Setup(a => a.RequestPermissionRepository((It.IsAny<Permiso>()))).Returns(Task.FromResult(It.IsAny<bool>()));
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
@@ -92,8 +98,8 @@ namespace WebApi.Test
                 FechaPermiso = "2023-08-04",
                 TipoPermiso = TypePermision.Get
             };
-
-            _permissionRepository.Setup(a => a.RequestPermissionRepository((It.IsAny<Permiso>()))).Returns(Task.FromResult(It.IsAny<Permiso>()));
+            _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
+            _permissionRepository.Setup(a => a.RequestPermissionRepository((It.IsAny<Permiso>()))).Returns(Task.FromResult(It.IsAny<bool>()));
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
@@ -108,7 +114,7 @@ namespace WebApi.Test
         {
             // Arrange
             int id = 1;
-            PermisionsDTO newPermission = new PermisionsDTO()
+            PermisionsDTO newPermissionDTO = new PermisionsDTO()
             {
                 NombreEmpleado = "testOk",
                 ApellidoEmpleado = "testOk",
@@ -116,14 +122,24 @@ namespace WebApi.Test
                 TipoPermiso = 1
             };
 
-            _permissionRepository.Setup(a => a.ModifyPermissionRepository(It.IsAny<int>(), It.IsAny<Permiso>())).Returns(Task.FromResult(It.IsAny<Permiso>()));
+            Permiso newPermission = new Permiso()
+            {
+                NombreEmpleado = "testOk",
+                ApellidoEmpleado = "testOk",
+                FechaPermiso = DateTime.Parse("2023-08-04"),
+                TipoPermiso = 1
+            };
+
+            _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
+            _permissionRepository.Setup(a => a.ModifyPermissionRepository(It.IsAny<int>(), It.IsAny<Permiso>())).Returns(Task.FromResult(true));
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
-            var result = getPermissionsServices.ModifyPermissionServices(id,newPermission);
+            var result = getPermissionsServices.ModifyPermissionServices(id, newPermissionDTO);
 
             // Assert
             Assert.IsTrue(result.Result.IsOk);
+            Assert.IsTrue(result.Result.Message == "successful edit permission");
         }
 
         [TestMethod]
@@ -131,7 +147,7 @@ namespace WebApi.Test
         {
             // Arrange
             int id = 1;
-            PermisionsDTO newPermission = new PermisionsDTO()
+            PermisionsDTO newPermissionDTO = new PermisionsDTO()
             {
                 NombreEmpleado = "testOk",
                 ApellidoEmpleado = "testOk",
@@ -139,14 +155,24 @@ namespace WebApi.Test
                 TipoPermiso = 1
             };
 
-            _permissionRepository.Setup(a => a.ModifyPermissionRepository(It.IsAny<int>(), It.IsAny<Permiso>())).Returns(Task.FromResult(It.IsAny<Permiso>()));
+            Permiso newPermission = new Permiso()
+            {
+                NombreEmpleado = "testOk",
+                ApellidoEmpleado = "testOk",
+                FechaPermiso = DateTime.Parse("2023-08-04"),
+                TipoPermiso = 1
+            };
+
+            _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
+            _permissionRepository.Setup(a => a.ModifyPermissionRepository(It.IsAny<int>(), It.IsAny<Permiso>())).Returns(Task.FromResult(It.IsAny<bool>()));
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
-            var result = getPermissionsServices.ModifyPermissionServices(id, newPermission);
+            var result = getPermissionsServices.ModifyPermissionServices(id, newPermissionDTO);
 
             // Assert
             Assert.IsFalse(result.Result.IsOk);
+            Assert.IsTrue(result.Result.Message == "an error occurred while edit the permission");
         }
 
         #region private Methods

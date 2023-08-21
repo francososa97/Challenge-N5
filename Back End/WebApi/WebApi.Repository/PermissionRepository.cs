@@ -22,7 +22,7 @@ namespace WebApi.Repository
             return permisos;
         }
 
-        public async Task<Permiso> ModifyPermissionRepository(int id, Permiso newPermission)
+        public async Task<bool> ModifyPermissionRepository(int id, Permiso newPermission)
         {
             int result = 0;
             using (var context = new N5ChallengeContext())
@@ -36,10 +36,10 @@ namespace WebApi.Repository
 
                 result = await context.SaveChangesAsync();
             }
-            return newPermission;
+            return result == -1;
         }
 
-        public async Task<Permiso> RequestPermissionRepository(Permiso newPermission)
+        public async Task<bool> RequestPermissionRepository(Permiso newPermission)
         {
             int result = 0;
             using (var context = new N5ChallengeContext())
@@ -47,7 +47,7 @@ namespace WebApi.Repository
                 var permisionsList = context.Permisos.Add(newPermission);
                 result = await context.SaveChangesAsync();
             }
-            return newPermission;
+            return result == -1; ;
         }
     }
 }
