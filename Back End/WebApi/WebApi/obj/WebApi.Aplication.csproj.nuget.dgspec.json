@@ -349,6 +349,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Docker.DotNet": {
+              "target": "Package",
+              "version": "[3.125.15, )"
+            },
             "Elsa.Persistence.EntityFramework.Core": {
               "target": "Package",
               "version": "[2.12.0, )"

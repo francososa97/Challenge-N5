@@ -5,15 +5,11 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import IconButton from '@mui/material/IconButton';
-import EditIcon from '@mui/icons-material/Edit';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import { getAllPermisosService } from '../Services/GetAllPermisosService.tsx';
-import { Permiso } from '../sheared/Permiso.js';
-import ModalToEdit from  '../Components/ModalToEdit.tsx';
-import ModalToView from  '../Components/ModalToView.tsx';
+import { Permiso } from '../sheared/Permiso.tsx';
+import ModalToEdit from  './Modals/ModalToEdit.tsx';
+import ModalToView from  './Modals/ModalToView.tsx';
 import { PermisionContext } from '../Context/PermisionContext.tsx';
 
 interface Column {
@@ -25,8 +21,16 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: 'name', label: 'First Name', minWidth: 170 },
-  { id: 'apellido', label: 'Last name', minWidth: 100 },
+  { 
+    id: 'name', 
+    label: 'First Name',
+    minWidth: 170 
+  },
+  { 
+    id: 'apellido',
+    label: 'Last name',
+    minWidth: 100 
+  },
   {
     id: 'typepermis',
     label: 'Type permissions',
@@ -47,23 +51,13 @@ const columns: readonly Column[] = [
   },
 ];
 
-interface Data {
-  name: string;
-  code: string;
-  population: number;
-  size: number;
-  density: number;
-}
-
  const Tablepermissions = () => {
 
-
   const {typeOfPermission}  = useContext(PermisionContext);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [permisos, setPermisos] = useState<Permiso[]>([]);
 
   useEffect(() => {
+
     const GetPermisos = async () => {
       try {
         const response = await getAllPermisosService.getAllPermisos();
@@ -72,18 +66,12 @@ interface Data {
         console.error('Error fetching permisos:', error);
       }
     };
+
     GetPermisos();
+
   }, [permisos]);
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
-  };
-
+  
+  //To do si llegamos agregamos el paginado si no no
   return (
     <Paper style={{ margin: '10' }} sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -105,14 +93,14 @@ interface Data {
           {permisos.map((permiso,index )=> {
             return (
                 <>
-                  <TableRow hover role="checkbox" tabIndex={-1}>
+                  <TableRow key={index} hover role="checkbox" tabIndex={-1}>
                     <TableCell>{permiso.nombreEmpleado}</TableCell>
                     <TableCell>{permiso.apellidoEmpleado}</TableCell>
                     <TableCell>{typeOfPermission[permiso.tipoPermiso]}</TableCell>
                     <TableCell>{permiso.fechaPermiso.toString()}</TableCell>
                     <TableCell>
-                      <ModalToEdit key={permiso.id} permiso ={permiso}/>
-                      <ModalToView key={index} permiso ={permiso}/>
+                      <ModalToEdit permiso ={permiso}/>
+                      <ModalToView permiso ={permiso}/>
                     </TableCell>
                   </TableRow>
                 </>
@@ -121,15 +109,6 @@ interface Data {
           </TableBody>
         </Table>
       </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={permisos.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
     </Paper>
   );
 }

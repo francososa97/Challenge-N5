@@ -5,11 +5,11 @@ import AlertError from './AlertError.tsx';
 const ErrorList = (props) => {
 
     const {errors} = props;
-
+    debugger;
   return (
     <Box sx={{ width: '100%' }}>
         { 
-            errors.map(error => <AlertError error={error}/> )
+            errors.map((error,index) => <AlertError key={index} error={error}/> )
         }
     </Box>
   );

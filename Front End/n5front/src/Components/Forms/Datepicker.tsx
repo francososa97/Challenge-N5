@@ -1,14 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateField } from '@mui/x-date-pickers/DateField';
 
+function ChangeFormat(string) {
+  var info = string.split('-');
+  return info[2] + '/' + info[1] + '/' + info[0];
+}
+
  const Datepicker = (props) => {
   
     const {datePermission,setDatePermission} = props;
-    const [value, setValue] = React.useState<Dayjs | null>(dayjs(datePermission));
+    const [value, setValue] = React.useState<Dayjs | null>(dayjs(ChangeFormat(datePermission)));
 
     const handleChangeDate = (newValue) => {
         setValue(newValue);

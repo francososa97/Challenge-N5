@@ -1,4 +1,4 @@
-import React, {useContext,useState} from 'react';
+import React, {useState} from 'react';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
@@ -9,9 +9,9 @@ import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import SelectTypePermission from './SelectTypePermission.tsx';
+import SelectTypePermission from '../Forms/SelectTypePermission.tsx';
 import Button from '@mui/material/Button';
-import Datepicker from './Forms/Datepicker.tsx';
+import Datepicker from '../Forms/Datepicker.tsx';
 
 
 const style = {

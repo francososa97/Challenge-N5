@@ -8,10 +8,11 @@ import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
-import { postPermisosService } from '../Services/PostPermisosService.tsx';
-import SelectTypePermission from './SelectTypePermission.tsx';
-import ErrorList from './Forms/ErrorList.tsx';
-import Datepicker from './Forms/Datepicker.tsx';
+import { postPermisosService } from '../../Services/PostPermisosService.tsx';
+import SelectTypePermission from '../Forms/SelectTypePermission.tsx';
+import ErrorList from '../Forms/ErrorList.tsx';
+import Datepicker from '../Forms/Datepicker.tsx';
+import Swal from 'sweetalert2'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -34,15 +35,32 @@ const CreatePermission = () => {
   const [nombreEmpleado, setNombreEmpleado] = React.useState('');
   const [apellidoEmpleado, setApellidoEmpleado] = React.useState('');
   const [datePermission, setDatePermission] = React.useState('');
-  const [typePermission, setTypePermission] = React.useState('');
+  const [typePermission, setTypePermission] = React.useState(0);
   const [callServices, setCallServices] = React.useState(false);
   const [errors, setErrors] = React.useState([]);
+  const [disableCreate, setDisableCreate] = React.useState(true);
+  
+  useEffect(() => {
+    let isOkAbiableBtn = nombreEmpleado.length > 0 
+                          && apellidoEmpleado.length > 0 
+                          && datePermission.length > 0 
+                          && typePermission > 0;
+    if(isOkAbiableBtn)
+      setDisableCreate(false)
+
+  }, [nombreEmpleado,apellidoEmpleado,datePermission,typePermission])
 
 
   const BuildPermission = () => {
-      return {nombreEmpleado,apellidoEmpleado,datePermission,typePermission}
+    return {
+      nombreEmpleado,
+      apellidoEmpleado,
+      "FechaPermiso":datePermission,
+      "TipoPermiso":typePermission
+    }
   }
 
+  //To do ver que pasa que no fuinca las validaciones
   const validateDate = () => {
       let isOkValidate = true;
       if(nombreEmpleado === "")
@@ -71,15 +89,13 @@ const CreatePermission = () => {
     const CreatePermission = async (newPermission: Permiso) => {
       try {
         const response = await postPermisosService.PostPermisos(newPermission);
-        console.log('response', response );
       } catch (error) {
-        console.error('Error fetching permisos:', error);
+       console.error(error);
       }
     };
     
   const handleSubmit = () => {
         setErrors([])
-        debugger;
          if(validateDate())
          {
             debugger;
@@ -146,11 +162,15 @@ const CreatePermission = () => {
                   <SelectTypePermission typeOfPermission={typePermission} setTypePermission={setTypePermission} />
               </Grid>
             </Grid>
+            <Grid item xs={12} sm={12}>
+              <Button variant="text" onClick={()=>handleClose()}>Close</Button>
+            </Grid>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={disableCreate}
             >
               Create permission
             </Button>

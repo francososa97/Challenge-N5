@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uKwYQnJKN5LuEabY6m8lTphlsom64DZl/NKVphxnf1l8IFVFviByWwME+xq7wNsh2R9j5Inb7LDmHmQSpqNxiw==",
+  "dgSpecHash": "Dt8yJ4rVB7qaKfaIgxTGdnY998Kaip1nH3mzPbTA1oWKt1R+w6Uo3JczJChiGMnlZvx7Dd5mWrd3IbyOPJqCwQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Franc\\Desktop\\Challenge N5\\Back End\\WebApi\\WebApi\\WebApi.Aplication.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,7 @@
     "C:\\Users\\Franc\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
     "C:\\Users\\Franc\\.nuget\\packages\\distributedlock.core\\1.0.4\\distributedlock.core.1.0.4.nupkg.sha512",
     "C:\\Users\\Franc\\.nuget\\packages\\distributedlock.filesystem\\1.0.1\\distributedlock.filesystem.1.0.1.nupkg.sha512",
+    "C:\\Users\\Franc\\.nuget\\packages\\docker.dotnet\\3.125.15\\docker.dotnet.3.125.15.nupkg.sha512",
     "C:\\Users\\Franc\\.nuget\\packages\\dotmorten.microsoft.sqlserver.types\\1.3.0\\dotmorten.microsoft.sqlserver.types.1.3.0.nupkg.sha512",
     "C:\\Users\\Franc\\.nuget\\packages\\efcore.bulkextensions\\6.2.9\\efcore.bulkextensions.6.2.9.nupkg.sha512",
     "C:\\Users\\Franc\\.nuget\\packages\\elsa.abstractions\\2.12.0\\elsa.abstractions.2.12.0.nupkg.sha512",

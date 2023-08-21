@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Tablepermissions from "../Components/Tablepermissions.tsx";
-import CreatePermission from '../Components/CreatePermission.tsx';
+import CreatePermission from '../Components/Modals/CreatePermission.tsx';
 import Grid from '@mui/material/Grid';
 import PermisionContext from '../Context/PermisionContext.tsx';
 

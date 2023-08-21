@@ -1,5 +1,10 @@
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Dependencias\web.config
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\appsettings.json
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Dependencias\appsettings.Development.json
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Dependencias\appsettings.json
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Dependencias\WebApi.Aplication.deps.json
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Dependencias\WebApi.Aplication.runtimeconfig.json
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\WebApi.Aplication.exe
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\WebApi.Aplication.deps.json
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\WebApi.Aplication.runtimeconfig.json
@@ -11,6 +16,7 @@ C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Azur
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Azure.Identity.dll
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\DistributedLock.Core.dll
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\DistributedLock.FileSystem.dll
+C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Docker.DotNet.dll
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Microsoft.SqlServer.Types.dll
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\EFCore.BulkExtensions.dll
 C:\Users\Franc\Desktop\Challenge N5\Back End\WebApi\WebApi\bin\Debug\net6.0\Elsa.Abstractions.dll

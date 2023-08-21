@@ -1,3 +1,4 @@
+using Docker.DotNet.Models;
 using WebApi.Models.Interfaces;
 using WebApi.Repository;
 using WebApi.Services;
