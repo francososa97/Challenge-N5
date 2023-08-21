@@ -1,22 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebApi.Infraestructure.Domain;
 
 namespace WebApi.Infraestructure;
 
 public partial class N5ChallengeContext : DbContext
 {
+    private string ConnectionString;
     public N5ChallengeContext()
     {
+        ConnectionString = "Server=DESKTOP-OGUUOAT\\SQLEXPRESS;Database=N5 Challenge; Trusted_Connection=true; TrustServerCertificate=True;";
     }
-
     public N5ChallengeContext(DbContextOptions<N5ChallengeContext> options)
         : base(options)
     {
     }
-    //To do pasar esto a un al json https://learn.microsoft.com/es-mx/ef/core/managing-schemas/scaffolding/?tabs=dotnet-core-cli
-    private readonly string ConnectionString = "Server=DESKTOP-OGUUOAT\\SQLEXPRESS;Database=N5 Challenge; Trusted_Connection=true; TrustServerCertificate=True;";
+
     public virtual DbSet<Permiso> Permisos { get; set; }
 
     public virtual DbSet<TipoPermiso> TipoPermisos { get; set; }

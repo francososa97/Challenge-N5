@@ -80,8 +80,6 @@ const style = {
     };
 
     const validateDate = () => {
-    //  To do agregar validaciones.
-    debugger;
       let isOkValidate = true;
       if(nombreEmpleado === "")
       {
@@ -95,7 +93,7 @@ const style = {
         setErrors(newErrors);
         isOkValidate = false;
       }
-      if(datePermission === "")
+      if(datePermission === "" || datePermission === "Invalid Date")
       {
         let newErrors = [...errors,'The name employ is empty'];
         setErrors(newErrors);
@@ -107,7 +105,6 @@ const style = {
         setErrors(newErrors);
         isOkValidate = false;
       }
-      //Validar que cambiamos algo si no dar el aviso
       return isOkValidate;
   }
 

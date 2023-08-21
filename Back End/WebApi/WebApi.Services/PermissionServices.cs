@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.SqlServer.Server;
+using Rebus.Messages;
 using WebApi.Infraestructure.Domain;
 using WebApi.Models.Dto;
 using WebApi.Models.Interfaces;
@@ -8,44 +9,57 @@ namespace WebApi.Services
 {
     public class PermissionServices : IPermissionServices
     {
-        private IPermissionRepository permissionRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PermissionServices(IPermissionRepository permissionRepository)
+        public PermissionServices(IUnitOfWork unitOfWork)
         {
-            this.permissionRepository = permissionRepository;
+            _unitOfWork = unitOfWork;
         }
 
-        public List<PermisionsDTO> GetPermissionsServices()
+        public async Task<GeneralDTOResponse> GetPermissionsServices()
         {
-            var permisions = permissionRepository.GetPermissionsServices();
+            var permisions = await _unitOfWork.PermissionRepository.GetPermissionsRepository();
             if (permisions.Any())
             {
                 var PermisionsDTO = BuildPermisionsDto(permisions);
-                return PermisionsDTO;
+                return BuildResponseDto(true, "successful Get all permissions", PermisionsDTO, new PermisionsDTO());
             }
             else
-                return new List<PermisionsDTO>();
+                return BuildResponseDto(false, "an error occurred while Get all the permission", new List<PermisionsDTO>(), new PermisionsDTO());
 
         }
 
-        public async Task<bool> ModifyPermissionServices(int id,PermisionsDTO newPermission)
+        public async Task<GeneralDTOResponse> ModifyPermissionServices(int id,PermisionsDTO newPermission)
         {
             var permiso = BuildPermisions(newPermission);
-            bool isOk = await permissionRepository.ModifyPermissionServices(id, permiso);
-            return isOk;
+            var newPermissionResponse = await _unitOfWork.PermissionRepository.ModifyPermissionRepository(id, permiso);
+            string mensagge = newPermissionResponse == permiso ? "successful edit permission" : "an error occurred while edit the permission";
+            return BuildResponseDto(newPermissionResponse == permiso, mensagge, new List<PermisionsDTO>(), newPermission);
         }
 
-        public bool RequestPermissionServices(AddPermisionsDTO newPermission)
+        public async Task<GeneralDTOResponse> RequestPermissionServices(AddPermisionsDTO newPermission)
         {
             var permiso = BuildAddPermisions(newPermission);
-            bool isOk = permissionRepository.RequestPermissionServices(permiso);
-             
-            //Devolver un dto armado lindo y no un task bool
-            return isOk;
+            Permiso newPermissionCreated = await _unitOfWork.PermissionRepository.RequestPermissionRepository(permiso);
+            string mensagge = newPermissionCreated == permiso ? "successful create permission" : "an error occurred while create the permission";
+            return BuildResponseDto(newPermissionCreated == permiso, mensagge, new List<PermisionsDTO>(), new PermisionsDTO());
         }
 
 
         #region Private Methods
+
+        private static GeneralDTOResponse BuildResponseDto(bool isOk,string mensagge, List<PermisionsDTO> Results, PermisionsDTO Result)
+        {
+            GeneralDTOResponse result = new Models.Dto.GeneralDTOResponse()
+            { 
+                IsOk = isOk,
+                Message= mensagge,
+                Results= Results,
+                Result= Result
+            };
+
+            return result;
+        }
         private static List<PermisionsDTO> BuildPermisionsDto(List<Permiso> permisions)
         {
             List<PermisionsDTO> permisosDTO = new List<PermisionsDTO>();
@@ -66,13 +80,12 @@ namespace WebApi.Services
 
         private static Permiso BuildPermisions(PermisionsDTO permisoDTO)
         {
-            DateTime.TryParseExact(permisoDTO.FechaPermiso, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime fechaConvertida);
             Permiso permiso = new Permiso()
             {   
                 Id = permisoDTO.Id,
                 NombreEmpleado = permisoDTO.NombreEmpleado,
                 ApellidoEmpleado = permisoDTO.ApellidoEmpleado,
-                FechaPermiso = fechaConvertida,
+                FechaPermiso = DateTime.Parse(permisoDTO.FechaPermiso),
                 TipoPermiso = permisoDTO.TipoPermiso,
             };
             return permiso;
@@ -80,12 +93,11 @@ namespace WebApi.Services
 
         private static Permiso BuildAddPermisions(AddPermisionsDTO permisoDTO)
         {
-            DateTime.TryParseExact(permisoDTO.FechaPermiso, "dd-MM-yyyy", null, System.Globalization.DateTimeStyles.None, out DateTime fechaConvertida);
             Permiso permiso = new Permiso()
             {
                 NombreEmpleado = permisoDTO.NombreEmpleado,
                 ApellidoEmpleado = permisoDTO.ApellidoEmpleado,
-                FechaPermiso = fechaConvertida,
+                FechaPermiso = DateTime.Parse(permisoDTO.FechaPermiso),
                 TipoPermiso = (int)permisoDTO.TipoPermiso,
             };
             return permiso;

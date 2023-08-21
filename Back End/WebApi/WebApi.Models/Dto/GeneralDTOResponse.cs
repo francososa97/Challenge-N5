@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace WebApi.Models.Dto
 {
-    internal class GeneralDTOResponse
+    public class GeneralDTOResponse
     {
-        public int IsOk { get; set; }
+        public bool IsOk { get; set; }
         public string Error { get; set; }
         public string Message { get; set; }
         public int Status { get; set; }

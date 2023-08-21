@@ -10,8 +10,8 @@ namespace WebApi.Models.Interfaces
 {
     public interface IPermissionServices
     {
-        bool RequestPermissionServices(AddPermisionsDTO newPermission);
-        Task<bool> ModifyPermissionServices(int id, PermisionsDTO newPermission);
-        List<PermisionsDTO> GetPermissionsServices();
+        Task<GeneralDTOResponse> RequestPermissionServices(AddPermisionsDTO newPermission);
+        Task<GeneralDTOResponse> ModifyPermissionServices(int id, PermisionsDTO newPermission);
+        Task<GeneralDTOResponse> GetPermissionsServices();
     }
 }

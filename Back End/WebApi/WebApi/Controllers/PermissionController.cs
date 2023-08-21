@@ -17,7 +17,7 @@ namespace WebApi.Aplication.Controllers
             _permissionServices = permissionServices;
         }
         [HttpPost("RequestPermission")]
-        public IActionResult RequestPermission(AddPermisionsDTO newPermission)
+        public async Task<IActionResult> RequestPermission(AddPermisionsDTO newPermission)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace WebApi.Aplication.Controllers
 
                 if (requestIsOk)
                 {
-                    var result = _permissionServices.RequestPermissionServices(newPermission);
+                    var result = await _permissionServices.RequestPermissionServices(newPermission);
                     return Ok(result);
                 }
                 return BadRequest("the fields sent are empty or wrong");
@@ -57,8 +57,8 @@ namespace WebApi.Aplication.Controllers
 
                     if (requestIsOk)
                     {
-                        var resultOk = await _permissionServices.ModifyPermissionServices(id, newPermission);
-                        if (resultOk)
+                        var result = await _permissionServices.ModifyPermissionServices(id, newPermission);
+                        if (result.IsOk)
                             return Ok();
                         else
                             return BadRequest("an error occurred while getting all permissions");
@@ -80,12 +80,12 @@ namespace WebApi.Aplication.Controllers
         }
 
         [HttpGet("GetPermissions")]
-        public IActionResult GetPermissions()
+        public async Task<IActionResult> GetPermissions()
         {
             try
             {
-                var result = _permissionServices.GetPermissionsServices();
-                if (result.Any())
+                var result = await _permissionServices.GetPermissionsServices();
+                if (result.Results.Any())
                     return Ok(result);
                 else
                     return BadRequest("an error occurred while getting all permissions");

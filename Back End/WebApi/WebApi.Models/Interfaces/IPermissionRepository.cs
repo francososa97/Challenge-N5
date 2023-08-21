@@ -11,8 +11,8 @@ namespace WebApi.Models.Interfaces
 {
     public interface IPermissionRepository
     {
-        bool RequestPermissionServices(Permiso newPermission);
-        Task<bool> ModifyPermissionServices(int id, Permiso newPermission);
-        List<Permiso> GetPermissionsServices();
+        Task<Permiso> RequestPermissionRepository(Permiso newPermission);
+        Task<Permiso> ModifyPermissionRepository(int id, Permiso newPermission);
+        Task<List<Permiso>> GetPermissionsRepository();
     }
 }

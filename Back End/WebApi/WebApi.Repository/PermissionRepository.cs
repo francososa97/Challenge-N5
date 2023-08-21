@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebApi.Infraestructure;
 using WebApi.Infraestructure.Domain;
 using WebApi.Models.Dto;
@@ -7,27 +8,25 @@ using WebApi.Models.Interfaces;
 
 namespace WebApi.Repository
 {
-    public class PermissionRepository : IPermissionRepository
+    public class PermissionRepository : N5ChallengeContext, IPermissionRepository
     {
-
-        public List<Permiso> GetPermissionsServices()
+        public async Task<List<Permiso>> GetPermissionsRepository()
         {
             List<Permiso> permisos= new List<Permiso>();
             using(var context = new N5ChallengeContext())
             {
-                var permisionsList = context.Permisos.ToList();
+                var permisionsList = await context.Permisos.ToListAsync();
                 permisos.AddRange(permisionsList);
             }
 
             return permisos;
         }
 
-        public async Task<bool> ModifyPermissionServices(int id, Permiso newPermission)
+        public async Task<Permiso> ModifyPermissionRepository(int id, Permiso newPermission)
         {
             int result = 0;
             using (var context = new N5ChallengeContext())
             {
-                //No le gusta la asincronicidad ni un poquito che,,,
                 var permision = context.Permisos.Where(p => p.Id == id).ToList().FirstOrDefault();
 
                 permision.FechaPermiso = newPermission.FechaPermiso;
@@ -37,19 +36,18 @@ namespace WebApi.Repository
 
                 result = await context.SaveChangesAsync();
             }
-            //To do Devolver dtos con respuesta no solo bools
-            return result != -1;
+            return newPermission;
         }
 
-        public bool RequestPermissionServices(Permiso newPermission)
+        public async Task<Permiso> RequestPermissionRepository(Permiso newPermission)
         {
             int result = 0;
             using (var context = new N5ChallengeContext())
             {
                 var permisionsList = context.Permisos.Add(newPermission);
-                result = context.SaveChanges();
+                result = await context.SaveChangesAsync();
             }
-            return result != -1;
+            return newPermission;
         }
     }
 }

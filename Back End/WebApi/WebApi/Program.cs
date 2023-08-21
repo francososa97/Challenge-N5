@@ -17,6 +17,7 @@ namespace WebApi
             builder.Services.AddCors();
             builder.Services.AddScoped<IPermissionServices, PermissionServices>();
             builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
+            builder.Services.AddSingleton<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
             app.UseCors(builder => builder

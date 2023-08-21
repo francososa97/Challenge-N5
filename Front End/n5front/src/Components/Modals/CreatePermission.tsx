@@ -61,35 +61,31 @@ const CreatePermission = () => {
     }
   }
 
-  //To do ver que pasa que no fuinca las validaciones
   const validateDate = () => {
-    //  To do agregar validaciones.
       let isOkValidate = true;
+      let newErrors = [...errors];
+
       if(nombreEmpleado === "")
       {
-        let newErrors = [...errors,'Employee name is empty'];
-        setErrors(newErrors);
+        newErrors = [...newErrors,'Employee name is empty'];
         isOkValidate = false;
       }
       if(apellidoEmpleado === "")
       {
-        let newErrors = [...errors,'the employee last name is empty'];
-        setErrors(newErrors);
+        newErrors = [...newErrors,'the employee last name is empty'];
         isOkValidate = false;
       }
-      if(datePermission === "")
+      if(datePermission === "" || datePermission === "Invalid Date")
       {
-        let newErrors = [...errors,'The name employ is empty'];
-        setErrors(newErrors);
+        newErrors = [...newErrors,'The name employ is empty'];
         isOkValidate = false;
       }
       if(typePermission === 0)
       {
-        let newErrors = [...errors,'permission date is wrong'];
-        setErrors(newErrors);
+        newErrors = [...newErrors,'permission date is wrong'];
         isOkValidate = false;
       }
-      //Validar que cambiamos algo si no dar el aviso
+      setErrors(newErrors);
       return isOkValidate;
   }
 
@@ -105,7 +101,6 @@ const CreatePermission = () => {
         setErrors([])
          if(validateDate())
          {
-            debugger;
             let newPermission = BuildPermission();
             CreatePermission(newPermission);
          }

@@ -61,7 +61,7 @@ const columns: readonly Column[] = [
     const GetPermisos = async () => {
       try {
         const response = await getAllPermisosService.getAllPermisos();
-        setPermisos(response);
+        setPermisos(response.results);
       } catch (error) {
         console.error('Error fetching permisos:', error);
       }
@@ -71,7 +71,6 @@ const columns: readonly Column[] = [
 
   }, [permisos]);
   
-  //To do si llegamos agregamos el paginado si no no
   return (
     <Paper style={{ margin: '10' }} sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -90,22 +89,26 @@ const columns: readonly Column[] = [
             </TableRow>
           </TableHead>
           <TableBody>
-          {permisos.map((permiso,index )=> {
-            return (
-                <>
-                  <TableRow key={index} hover role="checkbox" tabIndex={-1}>
-                    <TableCell>{permiso.nombreEmpleado}</TableCell>
-                    <TableCell>{permiso.apellidoEmpleado}</TableCell>
-                    <TableCell>{typeOfPermission[permiso.tipoPermiso]}</TableCell>
-                    <TableCell>{permiso.fechaPermiso.toString()}</TableCell>
-                    <TableCell>
-                      <ModalToEdit permiso ={permiso}/>
-                      <ModalToView permiso ={permiso}/>
-                    </TableCell>
-                  </TableRow>
-                </>
-            );
-          })}
+          {
+            permisos.length > 0 
+            ? permisos.map((permiso,index )=> {
+              return (
+                  <>
+                    <TableRow key={index} hover role="checkbox" tabIndex={-1}>
+                      <TableCell>{permiso.nombreEmpleado}</TableCell>
+                      <TableCell>{permiso.apellidoEmpleado}</TableCell>
+                      <TableCell>{typeOfPermission[permiso.tipoPermiso]}</TableCell>
+                      <TableCell>{permiso.fechaPermiso.toString()}</TableCell>
+                      <TableCell>
+                        <ModalToEdit permiso ={permiso}/>
+                        <ModalToView permiso ={permiso}/>
+                      </TableCell>
+                    </TableRow>
+                  </>
+              );
+            })
+            :null
+          }
           </TableBody>
         </Table>
       </TableContainer>

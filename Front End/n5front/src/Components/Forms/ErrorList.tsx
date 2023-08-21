@@ -5,7 +5,7 @@ import AlertError from './AlertError.tsx';
 const ErrorList = (props) => {
 
     const {errors} = props;
-    debugger;
+    
   return (
     <Box sx={{ width: '100%' }}>
         { 
