@@ -71,6 +71,7 @@ const ModalToView = (props) => {
                   label="First Name"
                   autoFocus
                   defaultValue={permiso.nombreEmpleado}
+                  disabled={true}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -82,14 +83,15 @@ const ModalToView = (props) => {
                   name="lastName"
                   autoComplete="family-name"
                   defaultValue={permiso.apellidoEmpleado}
+                  disabled={true}
 
                 />
               </Grid>
               <Grid item xs={8} sm={6}>
-                <Datepicker datePermission={permiso.fechaPermiso}/>
+                <Datepicker disabled={true} datePermission={permiso.fechaPermiso}/>
               </Grid>
               <Grid item xs={2} sm={6}>
-                <SelectTypePermission typePermission={permiso.tipoPermiso}/>
+                <SelectTypePermission disabled={true} typePermission={permiso.tipoPermiso}/>
               </Grid>
               <Grid item xs={12} sm={12}>
               <Button variant="text" onClick={()=>handleClose()}>Close</Button>

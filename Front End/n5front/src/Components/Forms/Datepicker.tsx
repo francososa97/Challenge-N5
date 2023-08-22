@@ -12,7 +12,7 @@ function ChangeFormat(string) {
 
  const Datepicker = (props) => {
   
-    const {datePermission,setDatePermission} = props;
+    const {disabled,datePermission,setDatePermission} = props;
     const [value, setValue] = React.useState<Dayjs | null>(dayjs(ChangeFormat(datePermission)));
 
     const handleChangeDate = (newValue) => {
@@ -28,6 +28,7 @@ function ChangeFormat(string) {
         label="Basic date field"
         value={value}
         onChange={(newValue) => handleChangeDate(newValue)}
+        disabled={disabled}
         />
     </DemoContainer>
     </LocalizationProvider>

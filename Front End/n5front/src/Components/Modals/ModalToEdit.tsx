@@ -41,7 +41,6 @@ const style = {
     const [apellidoEmpleado, setApellidoEmpleado] = React.useState(permiso.apellidoEmpleado);
     const [datePermission, setDatePermission] = React.useState(permiso.fechaPermiso);
     const [typePermission, setTypePermission] = React.useState(permiso.tipoPermiso);
-    const [callServices, setCallServices] = React.useState(false);
     const [errors, setErrors] = React.useState<string[]>([]);
     const [disableCreate, setDisableCreate] = React.useState(true);
   
@@ -56,15 +55,13 @@ const style = {
   
     }, [nombreEmpleado,apellidoEmpleado,datePermission,typePermission])
 
-    // To do refactorizar
-    // To do Limpiar
     const BuildPermission = () => {
         return {id:permiso.id,nombreEmpleado,apellidoEmpleado,"FechaPermiso":datePermission,"TipoPermiso":typePermission}
     }
 
     const EditPermission = async (Id:Int16Array , newPermission: Permiso) => {
       try {
-        const response = await putPermisosService.PutPermisos(Id,newPermission);
+        await putPermisosService.PutPermisos(Id,newPermission);
         Swal.fire(
           'Successful!',
           'successful edition!',
@@ -144,7 +141,7 @@ const style = {
             </Typography>
             {errors.length > 0 ? <ErrorList errors={errors}/> :null}
             <FormControl fullWidth>
-            <Box component="form" noValidate onSubmit={() => HandleSubmit()} sx={{ mt: 3 }}>
+            <Box component="form" noValidate sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -187,7 +184,7 @@ const style = {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={ () => setCallServices(true)}
+              onClick={ () => HandleSubmit()}
               disabled={disableCreate}
             >
               Edit permission

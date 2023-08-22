@@ -12,8 +12,8 @@ import { postPermisosService } from '../../Services/PostPermisosService.tsx';
 import SelectTypePermission from '../Forms/SelectTypePermission.tsx';
 import ErrorList from '../Forms/ErrorList.tsx';
 import Datepicker from '../Forms/Datepicker.tsx';
-import Swal from 'sweetalert2'
 import Permiso from '../../sheared/Permiso.tsx';
+import Swal from 'sweetalert2'
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -91,7 +91,20 @@ const CreatePermission = () => {
 
     const CreatePermission = async (newPermission: Permiso) => {
       try {
-        const response = await postPermisosService.PostPermisos(newPermission);
+        await postPermisosService.PostPermisos(newPermission).then(response => {
+          Swal.fire(
+            'Successful!',
+            'successful create permission!',
+            'success'
+          )
+       })
+        .catch(function (error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'an error occurred while create the permission!'+error,
+          })
+        });;
       } catch (error) {
        console.error(error);
       }
