@@ -24,7 +24,7 @@ namespace WebApi.Test
         }
 
         [TestMethod]
-        public async void GetAllPermissionsOk()
+        public void GetAllPermissionsOk()
         {
             // Arrange
             Permiso permiso = new Permiso() {NombreEmpleado = "testOk",ApellidoEmpleado= "testOk", FechaPermiso = new DateTime(), TipoPermiso = 1 };
@@ -37,7 +37,7 @@ namespace WebApi.Test
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
-            var result = await getPermissionsServices.GetPermissionsServices();
+            var result = getPermissionsServices.GetPermissionsServices().Result;
 
             // Assert
             Assert.IsTrue(result.IsOk);
@@ -48,14 +48,14 @@ namespace WebApi.Test
         }
 
         [TestMethod]
-        public async void GetAllPermissionsFaill()
+        public void GetAllPermissionsFaill()
         {
             // Arrange
             _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
             _permissionRepository.Setup(a => a.GetPermissionsRepository()).ReturnsAsync(new List<Permiso>());
             var getPermissionsServices = GetPermissionsServices();
             // Act
-            var result = await getPermissionsServices.GetPermissionsServices();
+            var result = getPermissionsServices.GetPermissionsServices().Result;
 
             // Assert
             Assert.IsFalse(result.Results.Any());
@@ -65,7 +65,7 @@ namespace WebApi.Test
         }
 
         [TestMethod]
-        public async void PostPermissionsOk()
+        public void PostPermissionsOk()
         {
             // Arrange
             AddPermisionsDTO newPermission = new AddPermisionsDTO()
@@ -77,18 +77,20 @@ namespace WebApi.Test
             };
 
             _unitOfWorck.SetupGet(uw => uw.PermissionRepository).Returns(_permissionRepository.Object);
-            _permissionRepository.Setup(a => a.RequestPermissionRepository((It.IsAny<Permiso>()))).Returns(Task.FromResult(It.IsAny<bool>()));
+            _permissionRepository.Setup(a => a.RequestPermissionRepository((It.IsAny<Permiso>()))).Returns(Task.FromResult(true));
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
-            var result = await getPermissionsServices.RequestPermissionServices(newPermission);
+            var result = getPermissionsServices.RequestPermissionServices(newPermission).Result;
 
             // Assert
             Assert.IsTrue(result.IsOk);
+            Assert.IsTrue(result.Message == "successful create permission");
         }
+        
 
         [TestMethod]
-        public async void PostPermissionsFaill()
+        public void PostPermissionsFaill()
         {
             // Arrange
             AddPermisionsDTO newPermission = new AddPermisionsDTO()
@@ -103,10 +105,11 @@ namespace WebApi.Test
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
-            var result = await getPermissionsServices.RequestPermissionServices(newPermission);
+            var result = getPermissionsServices.RequestPermissionServices(newPermission).Result;
 
             // Assert
             Assert.IsFalse(result.IsOk);
+            Assert.IsTrue(result.Message == "an error occurred while create the permission");
         }
 
         [TestMethod]
@@ -135,11 +138,11 @@ namespace WebApi.Test
             var getPermissionsServices = GetPermissionsServices();
 
             // Act
-            var result = getPermissionsServices.ModifyPermissionServices(id, newPermissionDTO);
+            var result = getPermissionsServices.ModifyPermissionServices(id, newPermissionDTO).Result;
 
             // Assert
-            Assert.IsTrue(result.Result.IsOk);
-            Assert.IsTrue(result.Result.Message == "successful edit permission");
+            Assert.IsTrue(result.IsOk);
+            Assert.IsTrue(result.Message == "successful edit permission");
         }
 
         [TestMethod]
